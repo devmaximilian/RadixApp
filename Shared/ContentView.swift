@@ -8,22 +8,41 @@
 import SwiftUI
 
 struct ContentView: View {
+    #if os(macOS)
+    typealias LayoutStack = HStack
+    #else
+    typealias LayoutStack = VStack
+    #endif
+    
+    #if os(macOS)
+    private let height: CGFloat = 110
+    #else
+    private let height: CGFloat = 500
+    #endif
+    
     @State var lhsRadix: Radix = .decimal
     @State var rhsRadix: Radix = .binary
     @State var value: Int = 0
     
     var body: some View {
-        HStack(alignment: .center) {
+        LayoutStack(alignment: .center) {
             VStack(alignment: .leading) {
                 RadixView(
                     radix: $lhsRadix,
                     value: $value
                 )
             }
+            #if os(macOS)
             Rectangle()
                 .frame(width: 1)
                 .padding()
                 .foregroundColor(Color.secondary.opacity(0.15))
+            #else
+            Rectangle()
+                .frame(height: 1)
+                .padding()
+                .foregroundColor(Color.secondary.opacity(0.15))
+            #endif
             VStack(alignment: .leading) {
                 RadixView(
                     radix: $rhsRadix,
@@ -31,10 +50,8 @@ struct ContentView: View {
                 )
             }
         }
-        .fixedSize(horizontal: false, vertical: true)
+        .frame(height: height, alignment: .center)
         .padding(.horizontal)
-        .frame(height: 100)
-        .frame(minWidth: 300)
     }
 }
 

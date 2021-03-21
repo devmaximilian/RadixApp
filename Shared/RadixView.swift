@@ -28,8 +28,8 @@ struct RadixView: View {
                         .bold()
                         .offset(x: 0, y: 2)
                 }
-                .fixedSize()
             }
+            .fixedSize()
             .padding()
             .onTapGesture(count: 2, perform: beginEditing)
             .opacity(isEditing ? 0 : 1)
