@@ -19,6 +19,8 @@
 		0419A68B26079CA300845750 /* RadixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419A68926079CA300845750 /* RadixView.swift */; };
 		0419A68F26079D2300845750 /* Radix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419A68E26079D2300845750 /* Radix.swift */; };
 		0419A69026079D2300845750 /* Radix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419A68E26079D2300845750 /* Radix.swift */; };
+		0419A6942607AD7100845750 /* FocusableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419A6932607AD7100845750 /* FocusableTextField.swift */; };
+		0419A6952607AD7100845750 /* FocusableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419A6932607AD7100845750 /* FocusableTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,7 @@
 		0419A68426079C3E00845750 /* RadixModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadixModel.swift; sourceTree = "<group>"; };
 		0419A68926079CA300845750 /* RadixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadixView.swift; sourceTree = "<group>"; };
 		0419A68E26079D2300845750 /* Radix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radix.swift; sourceTree = "<group>"; };
+		0419A6932607AD7100845750 /* FocusableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusableTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,7 @@
 				0419A68426079C3E00845750 /* RadixModel.swift */,
 				0419A68926079CA300845750 /* RadixView.swift */,
 				0419A68E26079D2300845750 /* Radix.swift */,
+				0419A6932607AD7100845750 /* FocusableTextField.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -201,6 +205,7 @@
 			files = (
 				0419A67426079B7C00845750 /* ContentView.swift in Sources */,
 				0419A68A26079CA300845750 /* RadixView.swift in Sources */,
+				0419A6942607AD7100845750 /* FocusableTextField.swift in Sources */,
 				0419A68526079C3E00845750 /* RadixModel.swift in Sources */,
 				0419A67226079B7C00845750 /* RadixApp.swift in Sources */,
 				0419A68F26079D2300845750 /* Radix.swift in Sources */,
@@ -213,6 +218,7 @@
 			files = (
 				0419A67526079B7C00845750 /* ContentView.swift in Sources */,
 				0419A68B26079CA300845750 /* RadixView.swift in Sources */,
+				0419A6952607AD7100845750 /* FocusableTextField.swift in Sources */,
 				0419A68626079C3E00845750 /* RadixModel.swift in Sources */,
 				0419A67326079B7C00845750 /* RadixApp.swift in Sources */,
 				0419A69026079D2300845750 /* Radix.swift in Sources */,
