@@ -8,6 +8,6 @@ A simple numerical base conversion app.
 
 ![RadixApp on iOS](./Resources/iOS.png)
 
-#### WeatherApp on macOS
+#### RadixApp on macOS
 
 ![RadixApp on macOS](./Resources/macOS.png)
