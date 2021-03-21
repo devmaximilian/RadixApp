@@ -21,7 +21,7 @@ struct ContentView: View {
                 )
             }
             Rectangle()
-                .frame(width: 1, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .frame(width: 1)
                 .padding()
                 .foregroundColor(Color.secondary.opacity(0.15))
             VStack(alignment: .leading) {
