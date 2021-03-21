@@ -33,4 +33,8 @@ extension Radix {
         // TODO: Spacing for readability
         // stride(from: 0, to: string.count, by: 4)
     }
+    
+    func value(from text: String) -> Int? {
+        return Int(text, radix: rawValue)
+    }
 }
