@@ -39,39 +39,40 @@ struct FocusableTextField: ViewRepresentable {
     typealias NSViewType = _TextField
     
     class Coordinator: NSObject, TextFieldDelegate {
-       @Binding var text: String
-       @Binding var nextResponder: Bool?
-       @Binding var isResponder: Bool?
+        @Binding var text: String
+        @Binding var nextResponder: Bool?
+        @Binding var isResponder: Bool?
 
-       init(text: Binding<String>, nextResponder: Binding<Bool?>, isResponder: Binding<Bool?>) {
-         _text = text
-         _isResponder = isResponder
-         _nextResponder = nextResponder
-       }
+        init(text: Binding<String>, nextResponder: Binding<Bool?>, isResponder: Binding<Bool?>) {
+            _text = text
+            _isResponder = isResponder
+            _nextResponder = nextResponder
+        }
 
         func textFieldDidChangeSelection(_ textField: _TextField) {
             text = textField.text ?? ""
-       }
+        }
 
-       func textFieldDidBeginEditing(_ textField: _TextField) {
-          DispatchQueue.main.async {
-              self.isResponder = true
-          }
-       }
+        func textFieldDidBeginEditing(_ textField: _TextField) {
+            DispatchQueue.main.async {
+                self.isResponder = true
+            }
+        }
 
-       func textFieldDidEndEditing(_ textField: _TextField) {
-          DispatchQueue.main.async {
-              self.isResponder = false
-              if self.nextResponder != nil {
-                  self.nextResponder = true
-              }
-          }
-       }
-   }
+        func textFieldDidEndEditing(_ textField: _TextField) {
+            DispatchQueue.main.async {
+                self.isResponder = false
+                if self.nextResponder != nil {
+                    self.nextResponder = true
 
-   @Binding var text: String
-   @Binding var nextResponder: Bool?
-   @Binding var isResponder: Bool?
+                }
+            }
+        }
+    }
+
+    @Binding var text: String
+    @Binding var nextResponder: Bool?
+    @Binding var isResponder: Bool?
 
     #if os(iOS)
     var keyboard: UIKeyboardType = .default
