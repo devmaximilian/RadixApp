@@ -13,7 +13,7 @@ struct ContentView: View {
     @State var value: Int = 0
     
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
             VStack(alignment: .leading) {
                 RadixView(
                     radix: $lhsRadix,
@@ -31,9 +31,10 @@ struct ContentView: View {
                 )
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal)
         .frame(height: 100)
-        .frame(minWidth: 250)
+        .frame(minWidth: 300)
     }
 }
 

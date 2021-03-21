@@ -11,21 +11,57 @@ struct RadixView: View {
     @Binding var radix: Radix
     @Binding var value: Int
     
+    @State var isEditing: Bool = false
+    @State var text: String = ""
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(radix.displayName)
-                .font(.body)
-                .foregroundColor(.secondary)
-            HStack(alignment: .bottom, spacing: 0) {
-                Text(radix.displayValue(value))
-                    .font(.system(.title, design: .monospaced))
-                Text(radix.rawValue.description)
-                    .font(.system(.subheadline, design: .monospaced))
-                    .bold()
-                    .offset(x: 0, y: 2)
+        ZStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(radix.displayName)
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                HStack(alignment: .bottom, spacing: 0) {
+                    Text(radix.displayValue(value))
+                        .font(.system(.title, design: .monospaced))
+                    Text(radix.rawValue.description)
+                        .font(.system(.subheadline, design: .monospaced))
+                        .bold()
+                        .offset(x: 0, y: 2)
+                }
+                .fixedSize()
+            }
+            .padding()
+            .onTapGesture(count: 2, perform: beginEditing)
+            .opacity(isEditing ? 0 : 1)
+            if isEditing {
+                VStack {
+                    FocusableTextField(
+                        text: $text,
+                        nextResponder: .constant(false),
+                        isFirstResponder: .constant(true)
+                    )
+                    .foregroundColor(.primary)
+                    .onChange(of: text, perform: updateValue)
+                    Button("Done", action: finishEditing)
+                }
             }
         }
-        .padding()
+    }
+    
+    func beginEditing() {
+        self.text = value == 0 ? "" : radix.displayValue(value)
+        self.isEditing = true
+    }
+    
+    func updateValue(using string: String) {
+        if let newValue = radix.value(from: string) {
+            self.value = newValue
+        }
+    }
+    
+    func finishEditing() {
+        self.isEditing = false
+        self.text = ""
     }
 }
 
