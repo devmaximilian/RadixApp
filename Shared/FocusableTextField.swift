@@ -41,11 +41,11 @@ struct FocusableTextField: ViewRepresentable {
     class Coordinator: NSObject, TextFieldDelegate {
         @Binding var text: String
         @Binding var nextResponder: Bool?
-        @Binding var isResponder: Bool?
+        @Binding var isFirstResponder: Bool?
 
-        init(text: Binding<String>, nextResponder: Binding<Bool?>, isResponder: Binding<Bool?>) {
+        init(text: Binding<String>, nextResponder: Binding<Bool?>, isFirstResponder: Binding<Bool?>) {
             _text = text
-            _isResponder = isResponder
+            _isFirstResponder = isFirstResponder
             _nextResponder = nextResponder
         }
 
@@ -55,16 +55,15 @@ struct FocusableTextField: ViewRepresentable {
 
         func textFieldDidBeginEditing(_ textField: _TextField) {
             DispatchQueue.main.async {
-                self.isResponder = true
+                self.isFirstResponder = true
             }
         }
 
         func textFieldDidEndEditing(_ textField: _TextField) {
             DispatchQueue.main.async {
-                self.isResponder = false
+                self.isFirstResponder = false
                 if self.nextResponder != nil {
                     self.nextResponder = true
-
                 }
             }
         }
@@ -72,7 +71,7 @@ struct FocusableTextField: ViewRepresentable {
 
     @Binding var text: String
     @Binding var nextResponder: Bool?
-    @Binding var isResponder: Bool?
+    @Binding var isFirstResponder: Bool?
 
     #if os(iOS)
     var keyboard: UIKeyboardType = .default
@@ -80,12 +79,18 @@ struct FocusableTextField: ViewRepresentable {
 
     func makeUIView(context: ViewRepresentableContext<FocusableTextField>) -> _TextField {
         let textField = _TextField(frame: .zero)
+        textField.delegate = context.coordinator
         #if os(iOS)
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
         textField.keyboardType = keyboard
         #endif
-        textField.delegate = context.coordinator
+        #if os(macOS)
+        DispatchQueue.main.async {
+            // Actually make NSTextField the first responder
+            textField.window?.makeFirstResponder(textField)
+        }
+        #endif
         return textField
     }
     
@@ -99,13 +104,13 @@ struct FocusableTextField: ViewRepresentable {
         return Coordinator(
             text: $text,
             nextResponder: $nextResponder,
-            isResponder: $isResponder
+            isFirstResponder: $isFirstResponder
         )
     }
 
     func updateUIView(_ uiView: _TextField, context: ViewRepresentableContext<FocusableTextField>) {
         uiView.text = text
-        if isResponder ?? false {
+        if isFirstResponder ?? false {
             uiView.becomeFirstResponder()
         }
     }
@@ -119,6 +124,10 @@ struct FocusableTextField: ViewRepresentable {
 
 struct FocusableTextField_Previews: PreviewProvider {
     static var previews: some View {
-        FocusableTextField(text: .constant("Hello, World!"), nextResponder: .constant(nil), isResponder: .constant(nil))
+        FocusableTextField(
+            text: .constant("Hello, World!"),
+            nextResponder: .constant(nil),
+            isFirstResponder: .constant(nil)
+        )
     }
 }
