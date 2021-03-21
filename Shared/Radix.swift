@@ -7,10 +7,18 @@
 
 import Foundation
 
-enum Radix: Int {
+enum Radix: Int, CaseIterable {
     case binary = 2
     case decimal = 10
     case hexadecimal = 16
+}
+
+// Identifiable conformance
+
+extension Radix: Identifiable {
+    var id: Int {
+        return self.rawValue
+    }
 }
 
 // Display name
@@ -29,12 +37,16 @@ extension Radix {
 
 extension Radix {
     func displayValue(_ value: Int) -> String {
-        return String(value, radix: rawValue)
+        return String(value, radix: self.rawValue)
         // TODO: Spacing for readability
         // stride(from: 0, to: string.count, by: 4)
     }
-    
+}
+
+// Value parsing
+
+extension Radix {
     func value(from text: String) -> Int? {
-        return Int(text, radix: rawValue)
+        return Int(text, radix: self.rawValue)
     }
 }

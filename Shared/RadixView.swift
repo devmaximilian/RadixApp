@@ -35,6 +35,15 @@ struct RadixView: View {
             .opacity(isEditing ? 0 : 1)
             if isEditing {
                 VStack {
+                    Picker("Type", selection: $radix) {
+                        ForEach(Radix.allCases, id: \.self) { radix in
+                            Text(radix.displayName)
+                                .tag(radix.id)
+                        }
+                    }
+                    .onChange(of: radix) { _ in
+                        updateValue(using: text)
+                    }
                     FocusableTextField(
                         text: $text,
                         nextResponder: .constant(false),

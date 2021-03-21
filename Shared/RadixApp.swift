@@ -9,12 +9,9 @@ import SwiftUI
 
 @main
 struct RadixApp: App {
-    @ObservedObject var radixModel: RadixModel = .init()
-    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(radixModel)
         }
     }
 }
