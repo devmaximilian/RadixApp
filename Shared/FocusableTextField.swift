@@ -49,6 +49,26 @@ struct FocusableTextField: ViewRepresentable {
             _nextResponder = nextResponder
         }
 
+        #if os(macOS)
+        func controlTextDidChange(_ obj: Notification) {
+            if let textField = obj.object as? _TextField {
+                textFieldDidChangeSelection(textField)
+            }
+        }
+        
+        func controlTextDidBeginEditing(_ obj: Notification) {
+            if let textField = obj.object as? _TextField {
+                textFieldDidBeginEditing(textField)
+            }
+        }
+        
+        func controlTextDidEndEditing(_ obj: Notification) {
+            if let textField = obj.object as? _TextField {
+                textFieldDidEndEditing(textField)
+            }
+        }
+        #endif
+        
         func textFieldDidChangeSelection(_ textField: _TextField) {
             text = textField.text ?? ""
         }
@@ -62,9 +82,6 @@ struct FocusableTextField: ViewRepresentable {
         func textFieldDidEndEditing(_ textField: _TextField) {
             DispatchQueue.main.async {
                 self.isFirstResponder = false
-                if self.nextResponder != nil {
-                    self.nextResponder = true
-                }
             }
         }
     }
@@ -91,6 +108,9 @@ struct FocusableTextField: ViewRepresentable {
             textField.window?.makeFirstResponder(textField)
         }
         #endif
+        if isFirstResponder ?? false {
+            textField.becomeFirstResponder()
+        }
         return textField
     }
     
@@ -110,9 +130,6 @@ struct FocusableTextField: ViewRepresentable {
 
     func updateUIView(_ uiView: _TextField, context: ViewRepresentableContext<FocusableTextField>) {
         uiView.text = text
-        if isFirstResponder ?? false {
-            uiView.becomeFirstResponder()
-        }
     }
     
     #if os(macOS)
